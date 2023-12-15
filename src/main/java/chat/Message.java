@@ -1,9 +1,14 @@
 package chat;
 
+import java.time.LocalDateTime;
+
 public class Message {
     private String sender;
     private String receiver;
     private String content;
+
+    private LocalDateTime time;
+    private String rol;
 
     public String getSender() {
         return sender;
@@ -29,6 +34,22 @@ public class Message {
         this.content = content;
     }
 
+    public LocalDateTime getTime() {return time;}
+
+    public void setTime(LocalDateTime time) {this.time = time;}
+
+    public String getRol() {return rol;}
+
+    public void setRol(String rol) {this.rol = rol;}
+
+    public Message(String sender, String receiver, String content, LocalDateTime time, String rol) {
+        this.sender = sender;
+        this.receiver = receiver;
+        this.content = content;
+        this.time = time;
+        this.rol = rol;
+    }
+
     public Message(String sender, String receiver, String content) {
         this.sender = sender;
         this.receiver = receiver;
@@ -41,6 +62,8 @@ public class Message {
                 "sender='" + sender + '\'' +
                 ", receiver='" + receiver + '\'' +
                 ", content='" + content + '\'' +
+                ", time=" + time +
+                ", rol='" + rol + '\'' +
                 '}';
     }
 }
