@@ -42,11 +42,15 @@ public class Message {
 
     public void setRol(String rol) {this.rol = rol;}
 
-    public Message(String sender, String receiver, String content, LocalDateTime time, String rol) {
+    public Message() {
+        super();
+    }
+
+    public Message(String sender, String receiver, String content, String time, String rol) {
         this.sender = sender;
         this.receiver = receiver;
         this.content = content;
-        this.time = time;
+        this.time = LocalDateTime.parse(time);
         this.rol = rol;
     }
 
