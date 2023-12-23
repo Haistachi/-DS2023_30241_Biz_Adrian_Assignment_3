@@ -43,7 +43,7 @@ public class Message {
     public void setRol(String rol) {this.rol = rol;}
 
     public Message() {
-        super();
+
     }
 
     public Message(String sender, String receiver, String content, String time, String rol) {
