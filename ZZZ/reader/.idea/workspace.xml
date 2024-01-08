@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1f1b379a-faad-465a-8fb9-47f47521439f" name="Changes" comment="problema">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="isToolWindowVisible" value="false" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2Y7zY7fUxQTeRGj5Ti845ZXXoM1" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "E:/Adi/Faculta/An4Cont/SD/Proiect2/DS2023_30142_Biz_Adrian_2_Reader",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Senzor1">
+    <configuration default="true" type="AZURE_FUNCTION_SUPPORT" factoryName="Run Functions">
+      <option name="appName" />
+      <option name="appServicePlanName" />
+      <option name="appServicePlanResourceGroup" />
+      <option name="appSettingsKey" value="e1bbe123-3d46-4d1a-98bd-43f282428cc0" />
+      <option name="artifact" />
+      <option name="debugOptions" />
+      <option name="deployment" />
+      <option name="deploymentStagingDirectoryPath" />
+      <option name="funcPath" />
+      <option name="functionHostArguments" />
+      <option name="hostJsonPath" />
+      <option name="insightsName" />
+      <option name="instrumentationKey" />
+      <option name="javaVersion" />
+      <option name="localSettingsJsonPath" />
+      <option name="moduleName" />
+      <option name="os" />
+      <option name="pricingTier" />
+      <option name="providerMap">
+        <map />
+      </option>
+      <option name="region" />
+      <option name="resourceGroup" />
+      <option name="stagingFolder" />
+      <option name="subscription" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Senzor1" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="Send" />
+      <module name="DS2023_30142_Biz_Adrian_2_Reader" />
+      <option name="PROGRAM_PARAMETERS" value="1" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Senzor2" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="Send" />
+      <module name="DS2023_30142_Biz_Adrian_2_Reader" />
+      <option name="PROGRAM_PARAMETERS" value="2" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Senzor1" />
+      <item itemvalue="Application.Senzor2" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1f1b379a-faad-465a-8fb9-47f47521439f" name="Changes" comment="" />
+      <created>1699891452472</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1699891452472</updated>
+      <workItem from="1699891464673" duration="1901000" />
+      <workItem from="1700479978746" duration="1430000" />
+      <workItem from="1700492612032" duration="1881000" />
+      <workItem from="1700494989474" duration="1908000" />
+      <workItem from="1700683592364" duration="2851000" />
+      <workItem from="1700748269704" duration="419000" />
+      <workItem from="1700924441637" duration="1967000" />
+      <workItem from="1700938382946" duration="590000" />
+      <workItem from="1700942781595" duration="754000" />
+      <workItem from="1700954522509" duration="123000" />
+      <workItem from="1700996130816" duration="1543000" />
+      <workItem from="1701082114508" duration="2395000" />
+      <workItem from="1701097063396" duration="2897000" />
+      <workItem from="1701550237023" duration="2092000" />
+      <workItem from="1701884573395" duration="1479000" />
+      <workItem from="1701964304520" duration="716000" />
+      <workItem from="1702027710660" duration="1869000" />
+      <workItem from="1702034866519" duration="68000" />
+      <workItem from="1702152630119" duration="605000" />
+      <workItem from="1702241743413" duration="24000" />
+      <workItem from="1702241883967" duration="77000" />
+    </task>
+    <task id="LOCAL-00001" summary="comit">
+      <created>1701084119430</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1701084119430</updated>
+    </task>
+    <task id="LOCAL-00002" summary="problema">
+      <created>1701978249479</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1701978249479</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="comit" />
+    <MESSAGE value="problema" />
+    <option name="LAST_COMMIT_MESSAGE" value="problema" />
+  </component>
+</project>
