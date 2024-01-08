@@ -1,0 +1,93 @@
+version: "3"
+
+services:
+  app-persoane:
+    image: backend:latest
+    ports:
+      - "8081:8081"
+    build:
+      context: persoane_back-end
+      dockerfile: Dockerfile
+    container_name: app-persoane
+    depends_on:
+      - db-persoane
+
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db-persoane:5432/person
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=A.Hunu2000
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  app-device:
+    image: backend2:latest
+    ports:
+      - "8082:8082"
+    build:
+      context: device_back-end
+      dockerfile: Dockerfile
+    container_name: app-device
+    depends_on:
+      - db-device
+
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db-device:5432/device
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=A.Hunu2000
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  app-measurements:
+    image: backend3:latest
+    ports:
+      - "8083:8083"
+    build:
+      context: measurements-end
+      dockerfile: Dockerfile
+    container_name: app-measurements
+    depends_on:
+      - db-measurements
+
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db-measurements:5432/active
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=A.Hunu2000
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  frontend:
+    image: frontend:latest
+    ports:
+      - "3000:3000"
+    build:
+      context: interface_front-end
+      dockerfile: Dockerfile
+    container_name: frontend
+
+  db-measurements:
+    image: 'postgres:16.0'
+    container_name: db-measurements
+    ports:
+      - "5434:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=A.Hunu2000
+      - POSTGRES_DB=active
+
+  db-device:
+    image: 'postgres:16.0'
+    container_name: db-device
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=A.Hunu2000
+      - POSTGRES_DB=device
+
+  db-persoane:
+    image: 'postgres:16.0'
+    container_name: db-persoane
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=A.Hunu2000
+      - POSTGRES_DB=person
+
