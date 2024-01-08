@@ -76,10 +76,11 @@ function User(props)
     }
     function showError(message) {console.log(message); return(navigate("/error"));}
     function delog() { localStorage.clear(); return(navigate("/"));}
+    function chat() { return(navigate("/chatroom"));}
     useEffect(
         ()=>{
             //console.log(localStorage.getItem("rol"));
-            if(localStorage.getItem("rol") !== "user")
+            if(localStorage.getItem("rol") !== "ROLE_USER")
                 return(navigate("/error"));
             setName(localStorage.getItem("user"));
             findPersonIdByName(localStorage.getItem("user"),(response, stat, err)=>{if(err) console.log(err);
@@ -97,7 +98,7 @@ function User(props)
 
     let onConnected = () => {
         console.log("Connected!!")
-        setTopics(['/topic/message']);
+        setTopics(['/topic/measurements']);
     }
 
     let onDisconnect = () => {
@@ -107,7 +108,6 @@ function User(props)
     let onMessageReceived = (msg) => {
         setMessage(msg)
         setIsMsg(true)
-
         //setTimeout
     }
 
@@ -142,6 +142,7 @@ function User(props)
                         <label style={{padding: "0 lem"}}>{pageDevice+1}</label>
                         <button onClick={onNextDevice}>Next</button>
                 </div></div>}
+            <div className="Button"><button onClick={chat}>ChatRoom</button></div>
             <div className="Button"><button onClick={delog}>Delog</button></div>
         </div>
         

@@ -1,0 +1,56 @@
+.App {
+  background-image: url("../energy-background.png");
+  min-height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.user-table{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  margin: 0 auto;
+  height: 70vh;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Full viewport height */
+}
+
+.message-container {
+  height: 600px;
+  width: 600px;
+  border: 2px solid black;
+  border-radius: 8px;
+  overflow-y: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: #D5f2c6;
+}
+
+
+.message {
+  margin-bottom: 8px;
+  padding: 8px;
+  border-radius: 8px;
+  max-width: 70%;
+  word-wrap: break-word;
+}
+
+.sender-me {
+  align-self: flex-end;
+  background-color: #402f10;
+}
+
+.sender-other {
+  align-self: flex-start;
+  background-color: #1e5b27;
+}
+

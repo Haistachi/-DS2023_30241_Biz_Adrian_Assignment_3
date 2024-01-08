@@ -1,9 +1,13 @@
+const jwtToken=localStorage.getItem("access_token");
+
 function showError(message) {console.log(message);}
+
 function getPersons(callback)
 {
     fetch("http://localhost:8081/person", {
         headers: {
-            "Content-Type": "application/json"},
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${jwtToken}`},
         method: "get",
     }).then((response) => {
         if (response.status === 200) return response.json();
@@ -19,7 +23,8 @@ function insertPerson(user, callback)
 {
     fetch("http://localhost:8081/person", {
         headers: {
-            "Content-Type": "application/json"},
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${jwtToken}`},
         method: "post",
         body: JSON.stringify({"username" : user.name, "userPassword": user.pass, "rol": user.rol})
     })
@@ -37,7 +42,8 @@ function deletePerson(userId, callback)
 {
     fetch("http://localhost:8081/person/" + userId, {
         headers: {
-            "Content-Type": "application/json"},
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${jwtToken}`},
         method: "delete",
     })
         .then((response) => {
@@ -54,7 +60,8 @@ function updatePerson(user, callback)
 {
     fetch("http://localhost:8081/person/" + user.id, {
         headers: {
-            "Content-Type": "application/json"},
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${jwtToken}`},
         method: "put",
         body: JSON.stringify(user)
     })
@@ -72,7 +79,8 @@ function getDevices(callback)
 {
     fetch("http://localhost:8082/device", {
         headers: {
-            "Content-Type": "application/json"},
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${jwtToken}`},
         method: "get",
     }).then((response) => {
         if (response.status === 200) return response.json();
@@ -88,7 +96,8 @@ function insertDevice(device, callback)
 {
     fetch("http://localhost:8082/device", {
         headers: {
-            "Content-Type": "application/json"},
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${jwtToken}`},
         method: "post",
         body: JSON.stringify({"person" : device.owner,
             "description": device.desc, "address": device.addr, "consumption": device.consume})
@@ -107,7 +116,8 @@ function deleteDevice(deviceId, callback)
 {
     fetch("http://localhost:8082/device/" + deviceId, {
         headers: {
-            "Content-Type": "application/json"},
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${jwtToken}`},
         method: "delete",
     })
         .then((response) => {
@@ -124,7 +134,8 @@ function updateDevice(device, callback)
 {
     fetch("http://localhost:8082/device/" + device.id, {
         headers: {
-            "Content-Type": "application/json"},
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${jwtToken}`},
         method: "put",
         body: JSON.stringify(device)
     })
@@ -142,7 +153,8 @@ function updateTreshhold(device, treshhold, callback)
 {
     fetch("http://localhost:8083/treshhold/update/" + device +"/"+ treshhold, {
         headers: {
-            "Content-Type": "application/json"},
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${jwtToken}`},
         method: "put",
     })
         .then((response) => {
@@ -160,7 +172,8 @@ function insertTreshhold(device, treshhold, callback)
     console.log("aici in functie: "+ device+" -- "+ treshhold)
     fetch("http://localhost:8083/treshhold/insert/" + device + "/" + treshhold, {
         headers: {
-            "Content-Type": "application/json"},
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${jwtToken}`},
         method: "post"
     })
         .then((response) => {
@@ -177,7 +190,8 @@ function deleteTreshhold(device, callback)
 {
     fetch("http://localhost:8083/treshhold/deleteByDevice/" + device, {
         headers: {
-            "Content-Type": "application/json"},
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${jwtToken}`},
         method: "delete",
 })
 .then((response) => {
@@ -195,7 +209,8 @@ function deleteActive(device, callback)
     console.log(device);
     fetch("http://localhost:8083/measurement/delete/findByDevice/" + device, {
         headers: {
-            "Content-Type": "application/json"},
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${jwtToken}`},
         method: "delete"
     })
         .then((response) => {

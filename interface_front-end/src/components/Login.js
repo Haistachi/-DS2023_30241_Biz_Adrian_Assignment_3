@@ -10,27 +10,57 @@ function Login(props)
     function showError(message) {console.log(message); return(navigate("/error"));}
     const handleSubmit = (e)=>{
         e.preventDefault();
-        fetch("http://localhost:8081/login", {
+        fetch("http://localhost:8081/login/aut3", {
             headers: {
-                "Content-Type": "application/json"},
-            method: "post",
-            body: JSON.stringify({"username" : name, "userPassword": pass})
+                "Content-Type": "application/x-www-form-urlencoded"},
+            method: "POST",
+            body: new URLSearchParams({
+                'username': name,
+                'userPassword': pass})
         })
             .then((response) => {
                 if (response.status === 200) return response.text();
             })
             .then((response) => {
-                if(!response)
+                if(!response) {
                     showError("Login fail");
-                else {
-                    localStorage.setItem("user", name);
-                    localStorage.setItem("rol", response);
-                    if (response === "admin")
-                        return (navigate("/admin"));
-                    else
-                        return(navigate("/user"));
                 }
+                else {
+                    const jsonObj= JSON.parse(response);
+                    console.log(JSON.parse(response));
+                    localStorage.setItem("access_token", jsonObj.access_token);
+                    localStorage.setItem("refresh_token", jsonObj.refresh_token);
+                    const jwtToken=jsonObj.access_token;
+                    fetch("http://localhost:8081/login/aut2", {
+                        headers: {
+                            "Content-Type": "application/json",
+                            'Authorization': `Bearer ${jwtToken}`
+                        },
+                        method: "POST",
+                        body: JSON.stringify({"username" : name, "userPassword": pass})
+                    })
+                        .then((response) => {
+                            if (response.status === 200) return response.text();
+                        })
+                        .then((response) => {
+                            if(!response)
+                                showError("Login fail");
+                            else {
+                                const jsonObj2= JSON.parse(response);
+                                console.log(jsonObj2);
+                                localStorage.setItem("user", jsonObj2.username);
+                                localStorage.setItem("pass", pass);
+                                const role = jsonObj2.authorities.map(auth => auth.authority)[0];
+                                localStorage.setItem("rol", role);
+                                console.log(role=== "ROLE_ADMIN");
+                                if (role=== "ROLE_ADMIN")
+                                    return (navigate("/admin"));
+                                else
+                                    return(navigate("/user"));
+                            }
 
+                        });
+                }
             });
     }
 

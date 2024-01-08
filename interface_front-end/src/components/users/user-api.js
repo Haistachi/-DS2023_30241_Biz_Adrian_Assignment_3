@@ -1,10 +1,12 @@
+const jwtToken=localStorage.getItem("access_token");
 function showError(message) {console.log(message);}
 
 function getActives(callback)
 {
     fetch("http://localhost:8083/measurement", {
         headers: {
-            "Content-Type": "application/json"},
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${jwtToken}`},
         method: "get",
     }).then((response) => {
         if (response.status === 200) return response.json();
@@ -21,7 +23,8 @@ function findDevicesByOwner(owner, callback)
     console.log(`Call devices with owner id = ${owner}`);
     fetch("http://localhost:8082/device/owner/" + owner, {
         headers: {
-            "Content-Type": "application/json"},
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${jwtToken}`},
         method: "get",
     }).then((response) => {
             if (response.status === 200) return response.json();
@@ -37,7 +40,8 @@ function findDeviceActive(idDevice, date, callback)
 {
     fetch("http://localhost:8083/measurement/findByDeviceAndDate/" + idDevice + "/" + date.toISOString().split(".")[0], {
         headers: {
-            "Content-Type": "application/json"},
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${jwtToken}`},
         method: "get",
     }).then((response) => {
         if (response.status === 200) return response.json();
@@ -54,7 +58,8 @@ function findPersonIdByName(name, callback)
     console.log(name);
     fetch("http://localhost:8081/person/id/" + name, {
         headers: {
-            "Content-Type": "application/json"},
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${jwtToken}`},
         method: "get",
     })
         .then((response) => {

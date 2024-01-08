@@ -1,182 +1,167 @@
-import React, { useEffect, useState } from 'react'
-import {over} from 'stompjs';
-import SockJS from 'sockjs-client';
+import React, { useState, useEffect, useRef } from 'react';
+import SockJsClient from 'react-stomp';
+import '../../App.css';
+import { Button } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
+function ChatRoom()
+{
+    const navigate = useNavigate();
+    const [messages, setMessages] = useState([]);
+    const [messageInput, setMessageInput] = useState('');
+    const [username, setUsername] = useState('');
+    const [topics, setTopics] = useState([]);
+    const [contacte, setContacte] = useState([]);
+    const rol = localStorage.getItem('rol');
 
-var stompClient =null;
-const ChatRoom = () => {
-    const [privateChats, setPrivateChats] = useState(new Map());
-    const [publicChats, setPublicChats] = useState([]);
-    const [tab,setTab] =useState("CHATROOM");
-    const [userData, setUserData] = useState({
-        username: '',
-        receivername: '',
-        connected: false,
-        message: ''
-    });
+    // ca sa putem trimite mesaje, trebe sa facem o referinta catre obiectul de client socket, pe care o initializam cu null la inceput
+    //clientRef este un obiect de referință (Ref)
+    //creat folosind useRef hook din React
+    //Aceasta este o modalitate de a păstra o referință către un element sau un obiect în cadrul componentelor funcționale în React,
+    //care poate fi utilizată pentru a accesa și manipula acest element sau obiect.
+    const clientRef = useRef(null);
+
+    function fSetTopic()
+    {
+        if(rol === "admin") {
+            setTopics(['/topic/messages'])
+        }
+        else
+        {
+            setTopics(['/topic/messages'])
+        }
+        console.log("Connected!!")
+    }
+
     useEffect(() => {
-        console.log(userData);
-    }, [userData]);
-
-    const connect =()=>{
-        let Sock = new SockJS('http://localhost:8082/ws');
-        stompClient = over(Sock);
-        stompClient.connect({},onConnected, onError);
-    }
-
-    const onConnected = () => {
-        setUserData({...userData,"connected": true});
-        stompClient.subscribe('/chatroom/public', onMessageReceived);
-        stompClient.subscribe('/user/'+userData.username+'/private', onPrivateMessage);
-        userJoin();
-    }
-
-    const userJoin=()=>{
-        var chatMessage = {
-            senderName: userData.username,
-            status:"JOIN"
-        };
-        stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
-    }
-
-    const onMessageReceived = (payload)=>{
-        var payloadData = JSON.parse(payload.body);
-        switch(payloadData.status){
-            case "JOIN":
-                if(!privateChats.get(payloadData.senderName)){
-                    privateChats.set(payloadData.senderName,[]);
-                    setPrivateChats(new Map(privateChats));
-                }
-                break;
-            case "MESSAGE":
-                publicChats.push(payloadData);
-                setPublicChats([...publicChats]);
-                break;
+        // Utilizarea useEffect pentru a seta username-ul când componenta este randata
+        setUsername(localStorage.getItem('user') + "-" + localStorage.getItem('rol'));
+        if (rol === "admin") {
+            let listContacte = JSON.parse(localStorage.getItem("ChatList"));
+            console.log(listContacte);
+            setContacte(listContacte);
         }
-    }
 
-    const onPrivateMessage = (payload)=>{
-        console.log(payload);
-        var payloadData = JSON.parse(payload.body);
-        if(privateChats.get(payloadData.senderName)){
-            privateChats.get(payloadData.senderName).push(payloadData);
-            setPrivateChats(new Map(privateChats));
-        }else{
-            let list =[];
-            list.push(payloadData);
-            privateChats.set(payloadData.senderName,list);
-            setPrivateChats(new Map(privateChats));
-        }
-    }
-
-    const onError = (err) => {
-        console.log(err);
-
-    }
-
-    const handleMessage =(event)=>{
-        const {value}=event.target;
-        setUserData({...userData,"message": value});
-    }
-    const sendValue=()=>{
-        if (stompClient) {
-            var chatMessage = {
-                senderName: userData.username,
-                message: userData.message,
-                status:"MESSAGE"
-            };
-            console.log(chatMessage);
-            stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
-            setUserData({...userData,"message": ""});
-        }
-    }
-
-    const sendPrivateValue=()=>{
-        if (stompClient) {
-            var chatMessage = {
-                senderName: userData.username,
-                receiverName:tab,
-                message: userData.message,
-                status:"MESSAGE"
-            };
-
-            if(userData.username !== tab){
-                privateChats.get(tab).push(chatMessage);
-                setPrivateChats(new Map(privateChats));
+        // Funcția returnată va fi apelată când componenta este dezactivată, inchidem conexiunea
+        return () => {
+            if (clientRef.current && clientRef.current.deactivate) {
+                clientRef.current.deactivate();
             }
-            stompClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
-            setUserData({...userData,"message": ""});
+        };
+    }, []);
+
+    // Funcție pentru a gestiona schimbarea valorii în input-ul de mesaj
+    const handleMessageChange = (e) => {
+        setMessageInput(e.target.value);
+    };
+
+    function Reconect()
+    {
+        if (clientRef.current && clientRef.current.deactivate) {
+            clientRef.current.deactivate();
         }
+        fSetTopic();
+    }
+    function Back()
+    {
+        localStorage.setItem('ChatList',[]);
+        if (clientRef.current && clientRef.current.deactivate) {
+            clientRef.current.deactivate();
+        }
+        if (rol === "ROLE_ADMIN")
+            return (navigate("/admin"));
+        else
+            return(navigate("/user"));
+    }
+    // Funcție pentru a trimite mesajul
+    const handleSendMessage = () => {
+        //aici voi schimbati, va mai adaugati ce va mai trebuie, eu am lasat reciever random
+        let date = new Date();
+        if(rol === "admin") {
+            for(let i=0; i< contacte.length ; i++ ) {
+                const message = {
+                    sender: username,
+                    receiver: contacte.at(i).username,
+                    content: messageInput,
+                    time: date.toISOString().split(".")[0],
+                    rol: localStorage.getItem('rol')
+                };
+                if (clientRef.current && clientRef.current.sendMessage) {
+                    clientRef.current.sendMessage('/app/chat', JSON.stringify(message));
+                }
+            }
+        }else
+        {
+            const message = {
+                sender: username,
+                receiver: 'admin',
+                content: messageInput,
+                time: date.toISOString().split(".")[0],
+                rol: localStorage.getItem('rol')
+            };
+            if (clientRef.current && clientRef.current.sendMessage) {
+                clientRef.current.sendMessage('/app/chat', JSON.stringify(message));
+            }
+        }
+        //current este proprietatea din obiectul de referință care conține referința efectivă către elementul sau obiectul
+        //pe care l-ați legat cu useRef.
+        //Prin accesarea proprietății current, puteți interacționa cu obiectul sau elementul din afara ciclului de viață al componentei.
+        //practic un mod de a accesa obiectul in sine, nu doar referinta
+        setMessageInput('');
+    };
+
+    // cand primim mesaj, pe langa cele pe care le avem deja vrem sa le pastram
+    //de asta punem cu .. inainte, asta inseamna ca la array-ul de mesaje deja existent, mai adaugam pe cel pe care l-am primit
+    const onMessageReceived = (msg) => {
+        console.log("message recived: ");
+        console.log(msg);
+        setMessages([...messages, msg]);
+    };
+
+    //setam topicul aici ca sa evitam sa ne dea eroare de connection cannot be established yet
+    let onConnected = () => {
+        fSetTopic();
     }
 
-    const handleUsername=(event)=>{
-        const {value}=event.target;
-        setUserData({...userData,"username": value});
-    }
-
-    const registerUser=()=>{
-        connect();
-    }
     return (
-        <div className="container">
-            {userData.connected?
-                <div className="chat-box">
-                    <div className="member-list">
-                        <ul>
-                            <li onClick={()=>{setTab("CHATROOM")}} className={`member ${tab==="CHATROOM" && "active"}`}>Chatroom</li>
-                            {[...privateChats.keys()].map((name,index)=>(
-                                <li onClick={()=>{setTab(name)}} className={`member ${tab===name && "active"}`} key={index}>{name}</li>
-                            ))}
-                        </ul>
+        <div className="chat-container">
+            <div className="message-container">
+                {messages.map((msg, index) => (
+                    <div
+                        key={index}
+                        className={`message ${msg.sender === username ? 'sender-me' : 'sender-other'}`} //aici am vrut sa fiu smechera sa pun clase diferite pt mesajele mele vs cele primite
+                    >
+                        {msg.time + " " + msg.sender}: {msg.content}
                     </div>
-                    {tab==="CHATROOM" && <div className="chat-content">
-                        <ul className="chat-messages">
-                            {publicChats.map((chat,index)=>(
-                                <li className={`message ${chat.senderName === userData.username && "self"}`} key={index}>
-                                    {chat.senderName !== userData.username && <div className="avatar">{chat.senderName}</div>}
-                                    <div className="message-data">{chat.message}</div>
-                                    {chat.senderName === userData.username && <div className="avatar self">{chat.senderName}</div>}
-                                </li>
-                            ))}
-                        </ul>
-
-                        <div className="send-message">
-                            <input type="text" className="input-message" placeholder="enter the message" value={userData.message} onChange={handleMessage} />
-                            <button type="button" className="send-button" onClick={sendValue}>send</button>
-                        </div>
-                    </div>}
-                    {tab!=="CHATROOM" && <div className="chat-content">
-                        <ul className="chat-messages">
-                            {[...privateChats.get(tab)].map((chat,index)=>(
-                                <li className={`message ${chat.senderName === userData.username && "self"}`} key={index}>
-                                    {chat.senderName !== userData.username && <div className="avatar">{chat.senderName}</div>}
-                                    <div className="message-data">{chat.message}</div>
-                                    {chat.senderName === userData.username && <div className="avatar self">{chat.senderName}</div>}
-                                </li>
-                            ))}
-                        </ul>
-
-                        <div className="send-message">
-                            <input type="text" className="input-message" placeholder="enter the message" value={userData.message} onChange={handleMessage} />
-                            <button type="button" className="send-button" onClick={sendPrivateValue}>send</button>
-                        </div>
-                    </div>}
-                </div>
-                :
-                <div className="register">
-                    <input
-                        id="user-name"
-                        placeholder="Enter your name"
-                        name="userName"
-                        value={userData.username}
-                        onChange={handleUsername}
-                        margin="normal"
-                    />
-                    <button type="button" onClick={registerUser}>
-                        connect
-                    </button>
-                </div>}
+                ))}
+            </div>
+            <Form>
+                <Form.Control
+                    type="text"
+                    value={messageInput}
+                    onChange={handleMessageChange}
+                    placeholder="Type your message..."
+                    style={{ marginTop:"5px"}}
+                    className="bg-dark text-light"
+                />
+            </Form>
+            <Button style={{marginTop:"5px"}} variant='dark' onClick={handleSendMessage}>Send</Button>
+            <Button style={{marginTop:"5px"}} variant='dark' onClick={Reconect}>Reconect</Button>
+            <Button style={{marginTop:"5px"}} variant='dark' onClick={Back}>Back</Button>
+            <SockJsClient
+                url="http://localhost:8084/ws"
+                topics={topics}
+                onConnect={onConnected}
+                onMessage={onMessageReceived}
+                ref={(client) => {
+                    if (client) {
+                        clientRef.current = client;
+                    }
+                    //aici dau referinta la acest client de socket
+                }}
+            />
         </div>
-    )
-}
+    );
+};
 
-export default ChatRoom
+export default ChatRoom;
