@@ -52,6 +52,15 @@ services:
       - SPRING_DATASOURCE_PASSWORD=A.Hunu2000
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
 
+  app-chat:
+    image: backend4:latest
+    ports:
+      - "8084:8084"
+    build:
+      context: chat-end
+      dockerfile: Dockerfile
+    container_name: app-chat
+
   frontend:
     image: frontend:latest
     ports:
